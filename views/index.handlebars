@@ -27,25 +27,34 @@
         {{#each restaurants}}
         {{!-- 所以不要寫成 this.id，因為在 Mongoose 裡使用 _id 來表示每筆資料的唯一識別碼。--}}
         <a href="/restaurants/{{this._id}}" class="text-secondary">
-          <div class="card mb-3">
-            <img class="card-img-top" src="{{this.image}}" alt="{{this.name}}">
+          <div class="card mb-1">
+            <img class="card-img-top" src="{{this.image}}" alt="{{this.name}}" />
             <div class="card-body p-3">
-              <h6 class="card-title mb-1">{{this.name}}</h6>
-
+              <h6 class="card-title mb-1 text-secondary">{{this.name}}</h6>
               <div class="restaurant-category mb-1">
-                <i class="fas fa-utensils pr-2"></i> {{this.category}}
+                <i class="fas fa-utensils pr-2"></i>
+                {{this.category}}
               </div>
-
               <span class="badge badge-pill badge-danger font-weight-normal">
                 {{this.rating}}
                 <i class="fas fa-star fa-xs"></i>
               </span>
-
             </div>
-          </div>
         </a>
-        {{/each}}
+
+        <div class="card-footer d-flex justify-content-around">
+          <form action="/restaurants/{{ this._id }}/edit" style="display: inline;">
+            <button type="submit" class="btn p-0" style="color: rgb(137, 137, 137)"><i
+                class="fas fa-pencil-alt"></i></button>
+          </form>
+          <form action="/restaurants/{{ this._id }}/delete" method="POST" style="display: inline;">
+            <button type="submit" class="btn p-0" style="color: rgb(255, 139, 139)"><i
+                class="fas fa-trash-alt"></i></button>
+          </form>
+        </div>
       </div>
+      {{/each}}
     </div>
   </div>
+</div>
 </div>

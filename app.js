@@ -43,12 +43,12 @@ app.get('/', (req, res) => {
     .catch(error => console.log(error))
 })
 
-// 新增餐廳頁面
+// 瀏覽新增餐廳頁面
 app.get('/restaurants/new', (req, res) => {
   res.render('new')
 })
 
-// 新增的餐廳資料
+// 新增餐廳的資料
 app.post('/restaurants', (req, res) => {
   Restaurant.create(req.body)
     .then(() => res.redirect('/'))
@@ -62,6 +62,38 @@ app.get('/restaurants/:id', (req, res) => {
     .lean()
     .then(restaurant => res.render('show', { restaurant }))
     .catch(error => console.log(error))
+})
+
+// 瀏覽編輯餐廳頁面
+app.get('/restaurants/:id/edit', (req, res) => {
+  const id = req.params.id
+  Restaurant.findById(id)
+    .lean()
+    .then(restaurant => res.render('edit', { restaurant }))
+    .catch(error => console.log(error))
+})
+
+// 編輯餐廳的資料
+app.post('/restaurants/:id/edit', (req, res) => {
+  const id = req.params.id
+  // 土法煉鋼法
+  // return Restaurant.findById(id)
+  //   .then((restaurant) => {
+  //     (restaurant.name = req.body.name),
+  //       (restaurant.name_en = req.body.name_en),
+  //       (restaurant.category = req.body.category),
+  //       (restaurant.image = req.body.image),
+  //       (restaurant.location = req.body.location),
+  //       (restaurant.phone = req.body.phone),
+  //       (restaurant.google_map = req.body.google_map),
+  //       (restaurant.rating = req.body.rating),
+  //       (restaurant.description = req.body.description);
+  //     return restaurant.save();
+  //   })
+  // 教案寫法
+  Restaurant.findByIdAndUpdate(id, req.body)
+    .then(() => res.redirect(`/restaurants/${id}`))
+    .catch((error) => console.log(error));
 })
 
 app.get('/search', (req, res) => {
