@@ -2,11 +2,8 @@
 const express = require('express')
 // 載入 mongoose
 const mongoose = require('mongoose')
-
-
-
-
-
+// 載入 Restaurant model
+const Restaurant = require('./models/restaurant')
 const app = express()
 const port = 3000
 // 設定連線到 mongoDB
@@ -23,7 +20,6 @@ db.once('open', () => {
   console.log('Connected to MongoDB')
 })
 
-
 // 在 Express 中使用樣版引擎
 const exphbs = require('express-handlebars')
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
@@ -32,11 +28,16 @@ app.set('view engine', 'handlebars')
 // 設定靜態檔案
 app.use(express.static('public'))
 
-// 讀取 JSON 檔案
-const restaurantList = require('./restaurant.json')
 
+// 路由設計
+// 瀏覽全部餐廳
 app.get('/', (req, res) => {
-  res.render('index', { restaurants: restaurantList.results })
+  // 從資料庫找出資料
+  Restaurant.find()
+    // 撈資料以後想用 res.render()，要先用 .lean() 來處理
+    .lean()
+    .then(restaurants => res.render('index', { restaurants }))
+    .catch(error => console.error(error))
 })
 
 app.get('/restaurants/:id', (req, res) => {
