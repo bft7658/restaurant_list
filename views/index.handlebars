@@ -9,6 +9,9 @@
             aria-describedby="search-button" value="{{ keywords }}">
           <div class="input-group-append">
             <button class="btn btn-major" type="submit" id="search-button"><i class="fas fa-search"></i></button>
+            <a href="/restaurants/new" style="margin-left: 0.5em;">
+              <button type="button" class="btn btn-major"><i class="fas fa-plus"></i></button>
+            </a>
           </div>
         </div>
       </form>
@@ -22,7 +25,8 @@
     <div class="col-md-10 col-12 mx-auto">
       <div class="card-columns">
         {{#each restaurants}}
-        <a href="/restaurants/{{this.id}}" class="text-secondary">
+        {{!-- 所以不要寫成 this.id，因為在 Mongoose 裡使用 _id 來表示每筆資料的唯一識別碼。--}}
+        <a href="/restaurants/{{this._id}}" class="text-secondary">
           <div class="card mb-3">
             <img class="card-img-top" src="{{this.image}}" alt="{{this.name}}">
             <div class="card-body p-3">

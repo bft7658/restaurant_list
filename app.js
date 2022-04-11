@@ -4,6 +4,8 @@ const express = require('express')
 const mongoose = require('mongoose')
 // 載入 Restaurant model
 const Restaurant = require('./models/restaurant')
+// 引用 body-parser
+const bodyParser = require('body-parser')
 const app = express()
 const port = 3000
 // 設定連線到 mongoDB
@@ -27,7 +29,8 @@ app.set('view engine', 'handlebars')
 
 // 設定靜態檔案
 app.use(express.static('public'))
-
+// 用 app.use 規定每一筆請求都需要透過 body-parser 進行前置處理
+app.use(bodyParser.urlencoded({ extended: true }))
 
 // 路由設計
 // 瀏覽全部餐廳
@@ -37,12 +40,28 @@ app.get('/', (req, res) => {
     // 撈資料以後想用 res.render()，要先用 .lean() 來處理
     .lean()
     .then(restaurants => res.render('index', { restaurants }))
-    .catch(error => console.error(error))
+    .catch(error => console.log(error))
 })
 
+// 新增餐廳頁面
+app.get('/restaurants/new', (req, res) => {
+  res.render('new')
+})
+
+// 新增的餐廳資料
+app.post('/restaurants', (req, res) => {
+  Restaurant.create(req.body)
+    .then(() => res.redirect('/'))
+    .catch(error => console.log(error))
+})
+
+// 瀏覽特定餐廳資料
 app.get('/restaurants/:id', (req, res) => {
-  const restaurant = restaurantList.results.find(item => item.id.toString() === req.params.id)
-  res.render('show', { restaurant: restaurant })
+  const id = req.params.id
+  Restaurant.findById(id)
+    .lean()
+    .then(restaurant => res.render('show', { restaurant }))
+    .catch(error => console.log(error))
 })
 
 app.get('/search', (req, res) => {
