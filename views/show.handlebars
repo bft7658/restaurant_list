@@ -47,5 +47,8 @@
     <a href="/restaurants/{{ restaurant._id }}/edit" class="btn btn-primary mr-2">
       <i class="fas fa-pencil-alt mr-2"></i>Edit
     </a>
+    <form action="/restaurants/{{ restaurant._id }}/delete" method="POST" style="display: inline;">
+      <button type="submit" class="btn btn-danger  text-white mr-2" style="color: rgb(255, 139, 139)"><i class="fas fa-trash-alt mr-2"></i>delete</button>
+    </form>
   </div>
 </div>
