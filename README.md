@@ -9,6 +9,7 @@
 - Click on the restaurant's image for further information.
 - Link to Google Maps by clicking on the restaurant address  
 - Search restaurant by their name or categories.
+- You can add, edit, delete any restaurant data.
 
 ## Getting Start
 
@@ -17,14 +18,23 @@
 
 ### Installing
 :white_check_mark: Clone or download the project to your folder
+
 ```bash
 git clone https://github.com/bft7658/restaurant_list
 ```
+
 :white_check_mark: Open `Terminal` to install the required packages  
 
 ```bash
 npm install
 ```
+
+:white_check_mark: Load the initial data
+
+```bash
+npm run seed
+```
+
 :white_check_mark: Start the server after install finished
 
 ```bash
@@ -34,7 +44,7 @@ npm run dev
 :white_check_mark: Run the browser when your `Terminal` shows the link 
 
 ```bash
-Express is listening on localhost:3000
+This website is running on http://localhost:3000
 ```
 
 :white_check_mark: Stop using browser by
@@ -45,7 +55,9 @@ Ctrl + c
 
 ## Development Tools
 - Node.js 16.14.0
-- Express 4.16.4
-- express-handlebars 3.0.0
+- Express 4.17.3
+- express-handlebars 4.0.2
 - Bootstrap 5.1.3
 - Font-awesome 5.8.1
+- MongoDB
+- mongoose 6.1.6

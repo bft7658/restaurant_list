@@ -107,6 +107,7 @@ app.post('/restaurants/:id/delete', (req, res) => {
 
 app.get('/search', (req, res) => {
   const keyword = req.query.keyword.trim().toLowerCase()
+  // Restaurant.find({ name: keyword, category: keyword })
   Restaurant.find()
     .lean()
     .then(restaurants => {
