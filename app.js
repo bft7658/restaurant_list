@@ -106,13 +106,18 @@ app.post('/restaurants/:id/delete', (req, res) => {
 })
 
 app.get('/search', (req, res) => {
-  const keyword = req.query.keyword
-  const restaurants = restaurantList.results.filter(item =>
-    item.name.toLowerCase().includes(keyword.toLowerCase().trim()) ||
-    item.category.toLowerCase().includes(keyword.toLowerCase().trim()) ||
-    item.name_en.toLowerCase().includes(keyword.toLowerCase().trim())
-  )
-  res.render('index', { restaurants: restaurants, keyword: keyword })
+  const keyword = req.query.keyword.trim().toLowerCase()
+  Restaurant.find()
+    .lean()
+    .then(restaurants => {
+      const filterRestaurants = restaurants.filter(data => 
+        data.name.toLowerCase().includes(keyword) || 
+        data.name_en.toLowerCase().includes(keyword) ||
+        data.category.toLowerCase().includes(keyword)
+      )
+      res.render('index', { restaurants: filterRestaurants, keyword })
+    })
+    .catch(error => console.log(error))
 })
 
 app.listen(port, () => {

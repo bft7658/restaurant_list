@@ -1,6 +1,6 @@
 # My Restaurant List
 
-![Index page about Restaurant List](./public/images/restaurant_cover.png)
+![Index page about Restaurant List](./public/images/restaurant_cover_1.png)
 
 :star: Display information of your favorite restaurants.
 
