@@ -6,6 +6,8 @@ const mongoose = require('mongoose')
 const Restaurant = require('./models/restaurant')
 // 引用 body-parser
 const bodyParser = require('body-parser')
+// 載入 method-override
+const methodOverride = require('method-override')
 const app = express()
 const port = 3000
 // 設定連線到 mongoDB
@@ -31,6 +33,9 @@ app.set('view engine', 'handlebars')
 app.use(express.static('public'))
 // 用 app.use 規定每一筆請求都需要透過 body-parser 進行前置處理
 app.use(bodyParser.urlencoded({ extended: true }))
+// 設定每一筆請求都會透過 methodOverride 進行前置處理
+app.use(methodOverride('_method'))
+
 
 // 路由設計
 // 瀏覽全部餐廳
@@ -74,7 +79,7 @@ app.get('/restaurants/:id/edit', (req, res) => {
 })
 
 // 編輯餐廳的資料
-app.post('/restaurants/:id/edit', (req, res) => {
+app.put('/restaurants/:id', (req, res) => {
   const id = req.params.id
   // 土法煉鋼法
   // return Restaurant.findById(id)
@@ -97,7 +102,7 @@ app.post('/restaurants/:id/edit', (req, res) => {
 })
 
 // 刪除特定餐廳資料
-app.post('/restaurants/:id/delete', (req, res) => {
+app.delete('/restaurants/:id', (req, res) => {
   const id = req.params.id
   return Restaurant.findById(id)
     .then(restaurant => restaurant.remove())
@@ -105,14 +110,15 @@ app.post('/restaurants/:id/delete', (req, res) => {
     .catch((error) => console.log(error))
 })
 
+// 搜尋餐廳
 app.get('/search', (req, res) => {
   const keyword = req.query.keyword.trim().toLowerCase()
   // Restaurant.find({ name: keyword, category: keyword })
   Restaurant.find()
     .lean()
     .then(restaurants => {
-      const filterRestaurants = restaurants.filter(data => 
-        data.name.toLowerCase().includes(keyword) || 
+      const filterRestaurants = restaurants.filter(data =>
+        data.name.toLowerCase().includes(keyword) ||
         data.name_en.toLowerCase().includes(keyword) ||
         data.category.toLowerCase().includes(keyword)
       )
