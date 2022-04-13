@@ -8,6 +8,9 @@ const Restaurant = require('./models/restaurant')
 const bodyParser = require('body-parser')
 // 載入 method-override
 const methodOverride = require('method-override')
+// 引用路由器
+const routes = require('./routes')
+
 const app = express()
 const port = 3000
 // 設定連線到 mongoDB
@@ -35,97 +38,9 @@ app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ extended: true }))
 // 設定每一筆請求都會透過 methodOverride 進行前置處理
 app.use(methodOverride('_method'))
+// 將 request 導入路由器
+app.use(routes)
 
-
-// 路由設計
-// 瀏覽全部餐廳
-app.get('/', (req, res) => {
-  // 從資料庫找出資料
-  Restaurant.find()
-    // 撈資料以後想用 res.render()，要先用 .lean() 來處理
-    .lean()
-    .then(restaurants => res.render('index', { restaurants }))
-    .catch(error => console.log(error))
-})
-
-// 瀏覽新增餐廳頁面
-app.get('/restaurants/new', (req, res) => {
-  res.render('new')
-})
-
-// 新增餐廳的資料
-app.post('/restaurants', (req, res) => {
-  Restaurant.create(req.body)
-    .then(() => res.redirect('/'))
-    .catch(error => console.log(error))
-})
-
-// 瀏覽特定餐廳資料
-app.get('/restaurants/:id', (req, res) => {
-  const id = req.params.id
-  Restaurant.findById(id)
-    .lean()
-    .then(restaurant => res.render('show', { restaurant }))
-    .catch(error => console.log(error))
-})
-
-// 瀏覽編輯餐廳頁面
-app.get('/restaurants/:id/edit', (req, res) => {
-  const id = req.params.id
-  Restaurant.findById(id)
-    .lean()
-    .then(restaurant => res.render('edit', { restaurant }))
-    .catch(error => console.log(error))
-})
-
-// 編輯餐廳的資料
-app.put('/restaurants/:id', (req, res) => {
-  const id = req.params.id
-  // 土法煉鋼法
-  // return Restaurant.findById(id)
-  //   .then((restaurant) => {
-  //     (restaurant.name = req.body.name),
-  //       (restaurant.name_en = req.body.name_en),
-  //       (restaurant.category = req.body.category),
-  //       (restaurant.image = req.body.image),
-  //       (restaurant.location = req.body.location),
-  //       (restaurant.phone = req.body.phone),
-  //       (restaurant.google_map = req.body.google_map),
-  //       (restaurant.rating = req.body.rating),
-  //       (restaurant.description = req.body.description);
-  //     return restaurant.save();
-  //   })
-  // 教案寫法
-  Restaurant.findByIdAndUpdate(id, req.body)
-    .then(() => res.redirect(`/restaurants/${id}`))
-    .catch((error) => console.log(error));
-})
-
-// 刪除特定餐廳資料
-app.delete('/restaurants/:id', (req, res) => {
-  const id = req.params.id
-  return Restaurant.findById(id)
-    .then(restaurant => restaurant.remove())
-    .then(() => res.redirect('/'))
-    .catch((error) => console.log(error))
-})
-
-// 搜尋餐廳
-app.get('/search', (req, res) => {
-  const keyword = req.query.keyword.trim().toLowerCase()
-  // Restaurant.find({ name: keyword, category: keyword })
-  Restaurant.find()
-    .lean()
-    .then(restaurants => {
-      const filterRestaurants = restaurants.filter(data =>
-        data.name.toLowerCase().includes(keyword) ||
-        data.name_en.toLowerCase().includes(keyword) ||
-        data.category.toLowerCase().includes(keyword)
-      )
-      res.render('index', { restaurants: filterRestaurants, keyword })
-    })
-    .catch(error => console.log(error))
-})
 
 app.listen(port, () => {
   console.log(`This website is running on http://localhost:${port}`)
