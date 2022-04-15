@@ -29,6 +29,12 @@ git clone https://github.com/bft7658/restaurant_list
 npm install
 ```
 
+:white_check_mark: Set environment variable 
+
+```bash
+MONGODB_URI = "<your URI>"
+```
+
 :white_check_mark: Load the initial data
 
 ```bash
