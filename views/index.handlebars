@@ -18,15 +18,22 @@
       {{!-- sort bar --}}
       <div class="dropdown input-group d-flex justify-content-between">
         <div class="dropdown">
-          <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+          <a class="btn btn-secondary dropdown-toggle" type="button" id="sort"
             data-bs-toggle="dropdown" aria-expanded="false">
             排列順序
           </a>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-            <li><a class="dropdown-item" href="/0">名稱 A → Z</a></li>
+          <ul class="dropdown-menu" aria-labelledby="sort">
+            {{!-- 用 params 方式 --}}
+            {{!-- <li><a class="dropdown-item" href="/0">名稱 A → Z</a></li>
             <li><a class="dropdown-item" href="/1">名稱 Z → A</a></li>
             <li><a class="dropdown-item" href="/2">評分 高 → 低</a></li>
-            <li><a class="dropdown-item" href="/3">評分 低 → 高</a></li>
+            <li><a class="dropdown-item" href="/3">評分 低 → 高</a></li> --}}
+
+            {{!-- 用 query string 方式--}}
+            <li><a class="dropdown-item" href="{{#if keyword}}?keyword={{keyword}}&{{else}}?{{/if}}sort=name">名稱 A → Z</a></li>
+            <li><a class="dropdown-item" href="{{#if keyword}}?keyword={{keyword}}&{{else}}?{{/if}}sort=-name">名稱 Z → A</a></li>
+            <li><a class="dropdown-item" href="{{#if keyword}}?keyword={{keyword}}&{{else}}?{{/if}}sort=-rating">評分 高 → 低</a></li>
+            <li><a class="dropdown-item" href="{{#if keyword}}?keyword={{keyword}}&{{else}}?{{/if}}sort=rating">評分 低 → 高</a></li>
           </ul>
         </div>
         <a href="/restaurants/new" style="margin-left: 0.5em;">
