@@ -41,6 +41,12 @@ const restaurantSchema = new Schema({
   description: {
     type: String,
     required: true
+  },
+  userId: {  // 加入關聯設定
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    index: true,
+    required: true
   }
 })
 // 透過 module.exports 把這個 schema 輸出。匯出的時候我們把這份 schema 命名為 Restaurant，以後在其他的檔案直接使用 Restaurant 就可以操作和「餐廳」有關的資料了！

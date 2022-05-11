@@ -5,9 +5,10 @@ const router = express.Router()
 const Restaurant = require('../../models/restaurant')
 // 瀏覽全部餐廳
 router.get('/', (req, res) => {
+  const userId = req.user._id
   const sort = req.query.sort || 'name'
   // 從資料庫找出資料
-  Restaurant.find()
+  Restaurant.find({ userId })
     // 撈資料以後想用 res.render()，要先用 .lean() 來處理
     .lean()
     // .sort({ _id: 'asc' })
@@ -18,10 +19,12 @@ router.get('/', (req, res) => {
 
 // 搜尋餐廳
 router.get('/search', (req, res) => {
+  const userId = req.user._id
   // 用 query string 方式
   const sort = req.query.sort || 'name'
   const keyword = req.query.keyword
   Restaurant.find({
+    userId,
     $or: [
       { name: { $regex: keyword, $options: "$i" } },
       { category: { $regex: keyword, $options: "$i" } },
@@ -46,22 +49,6 @@ router.get('/search', (req, res) => {
   //   })
   //     .catch(error => console.log(error))
 })
-
-// 用 params 方式
-// router.get('/:sort', (req, res) => {
-//   const sort = req.params.sort
-//   const sortObj = {
-//     '0': { name_en: 'asc' },
-//     '1': { name_en: 'desc' },
-//     '2': { rating: 'desc' },
-//     '3': { rating: 'asc' }
-//   }
-//   Restaurant.find()
-//     .lean()
-//     .sort(sortObj[sort])
-//     .then(restaurants => res.render('index', { restaurants }))
-//     .catch(error => console.error(error))
-// })
 
 // 匯出路由模組
 module.exports = router

@@ -2,8 +2,6 @@
 <div class="container search-bar">
   <div class="search-bar-outer">
     <div class="search-bar-inner">
-
-      {{#if restaurants}}
       <form action="/search" class="mb-3">
         {{!-- Search bar --}}
         <div class="input-group mb-2 mb-sm-0 mr-sm-4">
@@ -23,13 +21,6 @@
             排列順序
           </a>
           <ul class="dropdown-menu" aria-labelledby="sort">
-            {{!-- 用 params 方式 --}}
-            {{!-- <li><a class="dropdown-item" href="/0">名稱 A → Z</a></li>
-            <li><a class="dropdown-item" href="/1">名稱 Z → A</a></li>
-            <li><a class="dropdown-item" href="/2">評分 高 → 低</a></li>
-            <li><a class="dropdown-item" href="/3">評分 低 → 高</a></li> --}}
-
-            {{!-- 用 query string 方式--}}
             <li><a class="dropdown-item" href="{{#if keyword}}?keyword={{keyword}}&{{else}}?{{/if}}sort=name_en">名稱 A →
                 Z</a></li>
             <li><a class="dropdown-item" href="{{#if keyword}}?keyword={{keyword}}&{{else}}?{{/if}}sort=-name_en">名稱 Z →
@@ -48,6 +39,7 @@
   </div>
 </div>
 
+{{#if restaurants}}
 <!-- restaurant list -->
 <div class="container mt-5 mb-3">
   <div class="col-md col-12 mx-auto">
@@ -88,12 +80,13 @@
 
 {{else}}
 <!-- cannot find the restaurant through keyword -->
-<div class="d-flex flex-column align-items-center mt-5 p-5 bg-light">
-  <h2 class="p-1">搜尋不到符合的餐廳</h2>
-  <p class="p-1">請嘗試輸入其他關鍵字</p>
-  <a href="/" class="btn btn-outline-secondary mr-2">
-    <i class="fas fa-arrow-circle-left mr-2"></i>Back
-  </a>
+<div class="container">
+  <div class="d-flex flex-column align-items-center mt-3 p-2 mx-auto bg-light">
+    <h3 class="p-1">請嘗試輸入喜歡的餐廳</h3>
+    {{!-- <p class="p-1">請嘗試輸入其他關鍵字</p>
+    <a href="/" class="btn btn-outline-secondary mr-2">
+      <i class="fas fa-arrow-circle-left mr-2"></i>Back
+    </a> --}}
+  </div>
 </div>
 {{/if}}
-</div>
