@@ -24,7 +24,7 @@ router.get('/search', (req, res) => {
   const sort = req.query.sort || 'name'
   const keyword = req.query.keyword
   Restaurant.find({
-    userId,
+    $and: [{ userId }],
     $or: [
       { name: { $regex: keyword, $options: "$i" } },
       { category: { $regex: keyword, $options: "$i" } },

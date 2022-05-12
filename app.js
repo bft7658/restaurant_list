@@ -7,6 +7,10 @@ const bodyParser = require('body-parser')
 // 載入 method-override
 const methodOverride = require('method-override')
 const flash = require('connect-flash')
+// 判別環境變數
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
 // 引用路由器
 const routes = require('./routes')
 // 載入 passport 設定檔，要寫在 express-session 以後
@@ -25,7 +29,7 @@ app.set('view engine', 'handlebars')
 app.use(express.static('public'))
 // 設定 express-session
 app.use(session({
-  secret: 'ThisIsMySecret',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true
 }))
