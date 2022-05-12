@@ -37,7 +37,7 @@ router.get('/:id/edit', (req, res) => {
     .catch(error => console.log(error))
 })
 
-// 編輯餐廳的資料
+// 重新編輯餐廳的資料
 router.put('/:id', (req, res) => {
   const userId = req.user._id
   const _id = req.params.id

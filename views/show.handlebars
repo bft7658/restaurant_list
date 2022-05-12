@@ -47,8 +47,29 @@
     <a href="/restaurants/{{ restaurant._id }}/edit" class="btn btn-primary mr-2">
       <i class="fas fa-pencil-alt mr-2"></i>Edit
     </a>
-    <form action="/restaurants/{{ restaurant._id }}?_method=DELETE" method="POST" style="display: inline;">
-      <button type="submit" class="btn btn-danger text-white mr-2"><i class="fas fa-trash-alt mr-2"></i>delete</button>
-    </form>
+    <button type="button" class="btn btn-danger text-white mr-2" data-bs-toggle="modal"
+      data-bs-target="#exampleModal"><i class="fas fa-trash-alt mr-2"></i>Delete</button>
   </div>
 </div>
+
+<form action="/restaurants/{{ restaurant._id }}?_method=DELETE" method="POST" style="display: inline;">
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="exampleModalLabel">Remind!</h4>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span
+              aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure you want to delete the restaurant?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
