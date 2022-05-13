@@ -23,31 +23,23 @@ router.get('/search', (req, res) => {
   // 用 query string 方式
   const sort = req.query.sort || 'name'
   const keyword = req.query.keyword
-  Restaurant.find({
-    $and: [{ userId }],
-    $or: [
-      { name: { $regex: keyword, $options: "$i" } },
-      { category: { $regex: keyword, $options: "$i" } },
-    ]
-  })
+  Restaurant.find({ userId })
     .lean()
     .sort(sort)
-    .then((restaurants) => {
-      res.render('index', { restaurants, keyword });
+    .then(restaurants => {
+      if (keyword) {
+        restaurants = restaurants.filter(data =>
+          data.name.toLowerCase().includes(keyword) ||
+          data.name_en.toLowerCase().includes(keyword) ||
+          data.category.toLowerCase().includes(keyword)
+        )
+      }
+      if (restaurants.length === 0) {
+        return res.render('error')
+      }
+      res.render('index', { restaurants, keyword })
     })
     .catch(error => console.log(error))
-
-  // Restaurant.find()
-  //   .lean()
-  //   .then(restaurants => {
-  //     const filterRestaurants = restaurants.filter(data =>
-  //       data.name.toLowerCase().includes(keyword) ||
-  //       data.name_en.toLowerCase().includes(keyword) ||
-  //       data.category.toLowerCase().includes(keyword)
-  //     )
-  //     res.render('index', { restaurants: filterRestaurants, keyword })
-  //   })
-  //     .catch(error => console.log(error))
 })
 
 // 匯出路由模組
