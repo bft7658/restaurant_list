@@ -65,7 +65,7 @@ router.post('/register', (req, res) => {
         email,
         password: hash // 用雜湊值取代原本的使用者密碼
       }))
-      .then(() => res.redirect('/'))
+      .then(() => res.render('login', { email }))
       .catch(err => console.log(err))
   })
 })
