@@ -6,6 +6,8 @@ const session = require('express-session')
 const bodyParser = require('body-parser')
 // 載入 method-override
 const methodOverride = require('method-override')
+const hbshelpers = require('handlebars-helpers')
+const comparison = hbshelpers.comparison()
 const flash = require('connect-flash')
 // 判別環境變數
 if (process.env.NODE_ENV !== 'production') {
@@ -22,7 +24,7 @@ const port = 3000
 
 // 在 Express 中使用樣版引擎
 const exphbs = require('express-handlebars')
-app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
+app.engine('handlebars', exphbs({ defaultLayout: 'main', helpers: comparison }))
 app.set('view engine', 'handlebars')
 
 // 設定靜態檔案

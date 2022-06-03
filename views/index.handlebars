@@ -10,26 +10,18 @@
           <div class="input-group-append">
             <button class="btn btn-major" type="submit" id="search-button"><i class="fas fa-search"></i></button>
           </div>
+          {{!-- sort bar --}}
+          <select class="form-select btn btn-secondary ms-5" aria-label="Default select example" id="sort" name="sort"
+            onchange='if(this.value !== 0) { this.form.submit()}' style="margin-left: 28px;">
+            <option value="">排列方式</option>
+            <option value="1" {{#is sort "1" }} selected {{/is}}>名稱 A → Z</option>
+            <option value="2" {{#is sort "2" }} selected {{/is}}>名稱 Z → A</option>
+            <option value="3" {{#is sort "3" }} selected {{/is}}>評分 高 → 低</option>
+            <option value="4" {{#is sort "4" }} selected {{/is}}>評分 低 → 高</option>
+          </select>
         </div>
       </form>
-      {{!-- sort bar --}}
-      <div class="dropdown input-group d-flex justify-content-between">
-        <div class="dropdown">
-          <a class="btn btn-secondary dropdown-toggle" type="button" id="sort" data-bs-toggle="dropdown"
-            aria-expanded="false">
-            排列順序
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="sort">
-            <li><a class="dropdown-item" href="{{#if keyword}}?keyword={{keyword}}&{{else}}?{{/if}}sort=name_en">名稱 A →
-                Z</a></li>
-            <li><a class="dropdown-item" href="{{#if keyword}}?keyword={{keyword}}&{{else}}?{{/if}}sort=-name_en">名稱 Z →
-                A</a></li>
-            <li><a class="dropdown-item" href="{{#if keyword}}?keyword={{keyword}}&{{else}}?{{/if}}sort=-rating">評分 高 →
-                低</a></li>
-            <li><a class="dropdown-item" href="{{#if keyword}}?keyword={{keyword}}&{{else}}?{{/if}}sort=rating">評分 低 →
-                高</a></li>
-          </ul>
-        </div>
+      <div class="input-group d-flex justify-content-between">
         <a href="/restaurants/new" style="margin-left: 0.5em;">
           <button type="button" class="btn btn-primary"><i class="fas fa-plus mr-2"></i>新增餐廳</button>
         </a>
