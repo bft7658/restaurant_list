@@ -18,14 +18,19 @@
     <nav class="navbar navbar-light bg-light">
       <div class="container">
         <a class="navbar-brand" href="/">
-        <i class="fas fa-utensils pr-2"></i>
+          <i class="fas fa-utensils pr-2"></i>
           {{#if isAuthenticated}}{{ user.name }} {{/if}}Restaurant List
         </a>
         {{#if isAuthenticated}}
-        <a href="/users/logout" class="btn btn-outline-primary">Logout</a>
-        {{else}}
-        <a href="/users/login" class="btn btn-outline-primary">Login</a>
-        {{/if}}
+        <div>
+          <a href="/restaurants/new" class="btn btn-outline-primary mr-2"><i class="fas fa-plus mr-2"></i>新增餐廳
+          </a>
+          <a href="/users/logout" class="btn btn-outline-info">Logout</a>
+          {{else}}
+          <a href="/users/login" class="btn btn-outline-info">Login</a>
+          {{/if}}
+        </div>
+
       </div>
     </nav>
     <div class="banner"></div>

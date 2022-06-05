@@ -1,14 +1,15 @@
 # My Restaurant List
 
-![Index page about Restaurant List](./public/images/restaurant_cover_1.png)
+![Index page about Restaurant List](./public/images/restaurant_cover_3.png)
 
 :star: Display information of your favorite restaurants.
 
 ## Features
+- Register the new account through local or facebook.
+- Login into Restaurant list to manage your account. 
 - Show all restaurants in homepage.
 - Click on the restaurant's image for further information.
-- Link to Google Maps by clicking on the restaurant address  
-- Search restaurant by their name or categories.
+- Search restaurants by using keyword or sort filter.
 - You can add, edit, delete any restaurant data.
 
 ## Getting Start
@@ -53,6 +54,17 @@ npm run dev
 This website is running on http://localhost:3000
 ```
 
+:white_check_mark: Create a new account or use seed accounts below to test any function
+
+```bash
+email: user1@example.com
+password: 12345678
+```
+```bash
+email: user2@example.com
+password: 12345678
+```
+
 :white_check_mark: Stop using browser by
 
 ```bash
@@ -67,3 +79,7 @@ Ctrl + c
 - Font-awesome 5.8.1
 - MongoDB
 - mongoose 6.1.6
+- express-session 1.17.1
+- passport 0.4.1
+- bcryptjs 2.4.3
+- dotenv 8.2.0
