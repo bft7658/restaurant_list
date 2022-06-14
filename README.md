@@ -21,7 +21,7 @@
 :white_check_mark: Clone or download the project to your folder
 
 ```bash
-git clone https://github.com/bft7658/restaurant_list
+git clone https://github.com/bft7658/restaurant_list.git
 ```
 
 :white_check_mark: Open `Terminal` to install the required packages  
@@ -35,6 +35,14 @@ npm install
 ```bash
 MONGODB_URI = "<your URI>"
 ```
+
+```bash
+1. Please change the filename .env.example to .env
+2. Go to Facebook for Developers to get the application ID & key 
+3. Replace the SKIP with your Facebook ID and key in the .env file
+4. Following API service you'll need:
+```
+* [Meta for Developers](https://developers.facebook.com/)
 
 :white_check_mark: Load the initial data
 
